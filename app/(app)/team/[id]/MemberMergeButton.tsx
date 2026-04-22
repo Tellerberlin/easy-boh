@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 interface Employee {
   profile_id: string;
   name: string | null;
+  is_placeholder?: boolean;
 }
 
 interface Props {
@@ -78,13 +79,20 @@ export default function MemberMergeButton({ placeholderId, placeholderName, empl
               <button
                 key={e.profile_id}
                 onClick={() => setSelected(e)}
-                className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors flex items-center gap-2 ${
                   selected?.profile_id === e.profile_id
                     ? "bg-gray-900 text-white font-semibold"
                     : "hover:bg-gray-100 text-gray-700"
                 }`}
               >
-                {e.name || <span className="italic text-gray-400">No name</span>}
+                <span>{e.name || <span className="italic text-gray-400">No name</span>}</span>
+                {e.is_placeholder && (
+                  <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full ${
+                    selected?.profile_id === e.profile_id
+                      ? "bg-white/20 text-white"
+                      : "bg-amber-100 text-amber-700"
+                  }`}>imported</span>
+                )}
               </button>
             ))}
           </div>

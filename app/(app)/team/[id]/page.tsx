@@ -53,12 +53,10 @@ export default async function MemberPage({ params }: { params: Promise<{ id: str
     : { data: null };
 
   const mergeableEmployees = (realMembers || [])
-    .filter((m: { profile_id: string; profile: { name: string | null; is_placeholder: boolean } | null }) =>
-      !m.profile?.is_placeholder
-    )
     .map((m: { profile_id: string; profile: { name: string | null; is_placeholder: boolean } | null }) => ({
       profile_id: m.profile_id,
       name: m.profile?.name ?? null,
+      is_placeholder: m.profile?.is_placeholder ?? false,
     }))
     .sort((a: { name: string | null }, b: { name: string | null }) =>
       (a.name || "").localeCompare(b.name || "")
