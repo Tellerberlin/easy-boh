@@ -43,14 +43,13 @@ export default function HoursBalanceClient({
   allShifts,
 }: Props) {
   const today = todayISO();
-  const effectiveMax = contractEnd && contractEnd < today ? contractEnd : today;
-  const [untilDate, setUntilDate] = useState(effectiveMax);
+  const defaultUntil = contractEnd ?? today;
+  const [untilDate, setUntilDate] = useState(defaultUntil);
   useEffect(() => {
-    const newMax = contractEnd && contractEnd < today ? contractEnd : today;
-    setUntilDate(newMax);
+    setUntilDate(contractEnd ?? today);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contractEnd]);
-  const maxDate = effectiveMax;
+  const maxDate = today;
   const [sickDays, setSickDays]   = useState(initialSickDays);
   const [editingSick, setEditingSick] = useState(false);
   const [sickDraft, setSickDraft]     = useState(String(initialSickDays));
